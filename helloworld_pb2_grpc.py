@@ -6,7 +6,9 @@ import helloworld_pb2 as helloworld__pb2
 
 
 class GreeterStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """python -m grpc_tools.protoc -I protos --python_out=. --grpc_python_out=. protos/helloworld.proto
+
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -34,10 +36,17 @@ class GreeterStub(object):
                 request_serializer=helloworld__pb2.LobbyRequest.SerializeToString,
                 response_deserializer=helloworld__pb2.LobbyReply.FromString,
                 )
+        self.Logout = channel.unary_unary(
+                '/helloworld.Greeter/Logout',
+                request_serializer=helloworld__pb2.LogoutRequest.SerializeToString,
+                response_deserializer=helloworld__pb2.LogoutReply.FromString,
+                )
 
 
 class GreeterServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """python -m grpc_tools.protoc -I protos --python_out=. --grpc_python_out=. protos/helloworld.proto
+
+    """
 
     def Login(self, request, context):
         """Sends a greeting
@@ -60,6 +69,12 @@ class GreeterServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Lobby(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Logout(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -88,6 +103,11 @@ def add_GreeterServicer_to_server(servicer, server):
                     request_deserializer=helloworld__pb2.LobbyRequest.FromString,
                     response_serializer=helloworld__pb2.LobbyReply.SerializeToString,
             ),
+            'Logout': grpc.unary_unary_rpc_method_handler(
+                    servicer.Logout,
+                    request_deserializer=helloworld__pb2.LogoutRequest.FromString,
+                    response_serializer=helloworld__pb2.LogoutReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'helloworld.Greeter', rpc_method_handlers)
@@ -96,7 +116,9 @@ def add_GreeterServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Greeter(object):
-    """Missing associated documentation comment in .proto file."""
+    """python -m grpc_tools.protoc -I protos --python_out=. --grpc_python_out=. protos/helloworld.proto
+
+    """
 
     @staticmethod
     def Login(request,
@@ -163,5 +185,22 @@ class Greeter(object):
         return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/Lobby',
             helloworld__pb2.LobbyRequest.SerializeToString,
             helloworld__pb2.LobbyReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Logout(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/Logout',
+            helloworld__pb2.LogoutRequest.SerializeToString,
+            helloworld__pb2.LogoutReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
