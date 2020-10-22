@@ -2,6 +2,8 @@ from concurrent import futures
 import grpc
 import helloworld_pb2_grpc, helloworld_pb2
 import time
+import socket
+print(socket.gethostbyname(socket.gethostname()))
 
 TIMER = 5
 #python -m grpc_tools.protoc -I protos --python_out=. --grpc_python_out=. protos/helloworld.proto
