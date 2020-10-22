@@ -1,0 +1,50 @@
+syntax = "proto3";
+package helloworld;
+
+service Greeter {
+  // Sends a greeting
+  rpc Login (LoginRequest) returns (LoginReply) {}
+  // Sends another greeting
+  rpc IP (IPRequest) returns (IPReply) {}
+  rpc Command (CommandRequest) returns (CommandReply) {}
+  rpc Lobby (LobbyRequest) returns (LobbyReply) {}
+}
+
+message LobbyRequest {
+  string code = 1;  
+  string name = 2;
+}
+message LobbyReply {
+  string message = 1;
+  string code = 2;
+}
+
+// The request message containing the user's name.
+message LoginRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message LoginReply {
+  string message = 1;
+}
+
+message IPRequest {
+  string address = 1;
+}
+
+message IPReply {
+  string message = 1;
+}
+
+message CommandRequest {
+  string msg = 1;
+  string letter = 2;
+  string pid = 3;
+}
+
+message CommandReply {
+  string msg = 1;
+  string letter = 2;
+  string pid = 3;
+}
